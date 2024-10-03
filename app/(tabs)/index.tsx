@@ -1,17 +1,14 @@
 import React from 'react';
 import { Text, View, TextInput, StyleSheet, Button } from "react-native";
 import { router } from 'expo-router';
-import VideoGameStore from '@/app/state/video-games/videoGameStore';
 
 export default function SearchPage() {
   const [title, onChangeText] = React.useState('');
-  const videoGameStore: VideoGameStore = 
   const navigateToDetailsPage = () => {
     router.navigate("./pages/game-details");
   }
   const search = () => {
-    const searchAPI = title;
-    videoGameStore.searchByTitle(title);
+    console.log(title);
   }
   return (
 
