@@ -1,15 +1,18 @@
 import React from 'react';
-import { Text, View, TextInput, StyleSheet, Button } from "react-native";
+import { Text, View, TextInput, StyleSheet, Button, FlatList } from "react-native";
 import { router } from 'expo-router';
+import { useVideoGameStore } from '@/app/state/video-games/useVideoGameStore';
 
 export default function SearchPage() {
+  const { searchByTitle, gameResults } = useVideoGameStore();
   const [title, onChangeText] = React.useState('');
   const navigateToDetailsPage = () => {
     router.navigate("./pages/game-details");
   }
   const search = () => {
-    console.log(title);
+    searchByTitle(title);
   }
+
   return (
 
     <View
@@ -30,7 +33,16 @@ export default function SearchPage() {
         title='Search'
         onPress={search}
       />
-      <Text>Results will go down here</Text>
+      <FlatList
+        data={gameResults}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <>
+            <Text>{item.name}</Text>
+          </>
+        )}
+        style={{ maxHeight: 100 }}
+      />
       <Button
         title='Route to Details Page'
         onPress={navigateToDetailsPage}
